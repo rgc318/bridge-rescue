@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#152d2a">
+<meta name="description" content="拔掉木销，让散落的木板搭成桥，带山雀回家。横跨三片山谷的物理解谜游戏。">
+<title>拆桥救山雀 · 山谷救援</title>
+<link rel="stylesheet" href="style.css?v=4">
+<link rel="preload" as="image" href="maps/chapter-1.svg?v=3">
+</head>
+<body>
+<main class="shell">
+<header class="masthead">
+  <div class="brand"><span class="crest" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 35h34M11 35V20m26 15V20M11 24q13 13 26 0m-19 5v6m12-6v6M28 12l6-7m-4 10 8-3" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/></svg></span><div><div class="kicker">FINCH RESCUE</div><h1>拆桥救山雀</h1></div></div>
+  <div class="top-actions"><button id="help" class="icon-btn" type="button" aria-haspopup="dialog">玩法</button><button id="soundPanel" class="icon-btn" type="button" aria-haspopup="dialog">声音</button></div>
+</header>
+
+<div class="layout">
+<section class="game-card" aria-label="山雀救援">
+  <div class="heads-up">
+    <div><div class="region"><span id="region">雀鸣林</span><span class="sep"></span><span id="stageIndex">第 01 关</span></div><div id="chapter" class="chapter">一拆成桥</div></div>
+    <div class="ticker"><span>操作 <b id="moves">0</b></span><span id="birds">待救 1 只</span></div>
+  </div>
+  <div class="board" id="board">
+  <svg id="scene" viewBox="0 0 400 470" role="group" aria-label="救援场景" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="plankA" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e6b574"/><stop offset=".5" stop-color="#ba7c4c"/><stop offset="1" stop-color="#935435"/></linearGradient>
+      <linearGradient id="plankB" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b8bd89"/><stop offset=".6" stop-color="#7d8658"/><stop offset="1" stop-color="#4e5c45"/></linearGradient>
+      <linearGradient id="plankC" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d9ac85"/><stop offset=".65" stop-color="#9d635d"/><stop offset="1" stop-color="#694455"/></linearGradient>
+      <linearGradient id="rock" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b5c7c1"/><stop offset=".55" stop-color="#7f989d"/><stop offset="1" stop-color="#495b6d"/></linearGradient>
+      <radialGradient id="pin"><stop stop-color="#fff1a5"/><stop offset=".53" stop-color="#ffbf59"/><stop offset="1" stop-color="#dc7735"/></radialGradient>
+      <radialGradient id="bird0" cx=".66" cy=".24" r=".82"><stop stop-color="#a1e3dc"/><stop offset=".57" stop-color="#60acbf"/><stop offset="1" stop-color="#388191"/></radialGradient>
+      <radialGradient id="bird1" cx=".66" cy=".24" r=".82"><stop stop-color="#fff3b3"/><stop offset=".57" stop-color="#efb668"/><stop offset="1" stop-color="#af7049"/></radialGradient>
+      <radialGradient id="bird2" cx=".66" cy=".24" r=".82"><stop stop-color="#e6d6fb"/><stop offset=".57" stop-color="#ab90c8"/><stop offset="1" stop-color="#765c99"/></radialGradient>
+    </defs>
+    <rect width="400" height="470" fill="#7aae9a"/>
+    <image id="landscape" href="maps/chapter-1.svg?v=3" x="0" y="0" width="400" height="470" pointer-events="none" />
+    <g id="mechanisms"></g><g id="actors"></g><g id="pins"></g>
+  </svg>
+  <div class="board-note" id="boardNote" aria-hidden="true" hidden></div>
+  <div id="result" class="overlay" hidden role="status"><div class="result-kicker" id="resultKicker"></div><h2 id="resultTitle"></h2><p id="resultText"></p><p id="points" class="points" hidden></p><div class="result-actions"><button type="button" class="primary" id="continue"></button><button type="button" id="again">再玩一次</button></div></div>
+  </div>
+  <div class="fieldtools"><p class="guide" id="guide" aria-live="polite">点金色拉环，拔掉木销。</p><button id="hint" type="button">提示</button><button id="undo" type="button">撤销</button><button id="reset" title="快捷键 R" type="button">重来</button></div>
+</section>
+
+<aside class="rail" aria-label="山谷地图">
+  <div class="rail-head"><div class="kicker">VALLEY TRAIL</div><h2>救援地图</h2><p id="total">已救援 0 / 15 关</p><div class="progress" aria-hidden="true"><i id="progressFill"></i></div></div>
+  <nav id="select" aria-label="选关"></nav>
+  <div class="rail-key"><span><b>★</b> 最佳星级</span><span><b>◆</b> 金羽毛挑战</span></div>
+</aside>
+</div>
+<footer>点一下，搭一座桥。<span>竖屏可玩 · 无广告</span></footer>
+</main>
+
+<dialog id="helpDialog"><form method="dialog"><div class="dialog-top"><div><div class="kicker">FIELD GUIDE</div><h2>救援手册</h2></div><button class="icon-btn" aria-label="关闭救援手册">关闭</button></div>
+<dl><dt>01 · 找到木销</dt><dd>点金色拉环就能拔掉木销，不用拖。留着转轴，木板才有地方转动；拔错可以撤销。</dd><dt>02 · 看清支撑</dt><dd>让桥板接住彼此，或先把桥墩升起来。不确定下一步时点「提示」。</dd><dt>03 · 多一枚金羽毛</dt><dd>标 ◆ 的关卡可选做收集。少走弯路、独立解题或找回羽毛可获得更高星级。</dd></dl>
+<button class="primary wide">去救山雀</button></form></dialog>
+<dialog id="audioDialog"><form method="dialog"><div class="dialog-top"><div><div class="kicker">SOUND STUDIO</div><h2>声音设置</h2></div><button class="icon-btn" aria-label="关闭声音设置">关闭</button></div>
+<p>每片山谷都有自己的配乐。音乐和机关音效可以独立开关。</p><div class="sounds"><button type="button" id="sound" aria-pressed="false">音效：关</button><button type="button" id="music" aria-pressed="false">音乐：关</button></div><button class="primary wide">返回游戏</button></form></dialog>
+<noscript><p class="noscript">请开启浏览器的 JavaScript 后再试。</p></noscript>
+<script src="audio.js?v=3"></script><script src="game.js?v=4"></script><script src="view.js?v=4"></script>
+</body>
+</html>
